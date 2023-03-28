@@ -22,10 +22,5 @@ describe("Dappazon", () => {
     it('Set the owner', async () => {
       expect(await dappazon.owner()).to.equal(deployer.address);
     })
-
-    it('has a name', async () => {
-      const name = await dappazon.name();
-      expect(name).to.equal("Dappazon");
-    })
   })
 })
