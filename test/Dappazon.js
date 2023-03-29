@@ -5,6 +5,15 @@ const tokens = (n) => {
   return ethers.utils.parseUnits(n.toString(), 'ether')
 }
 
+
+const ID = 1;
+const NAME = "Shoes";
+const CATEGORY = "Clothing";
+const IMAGE = "";
+const COST = tokens(1);
+const RATING = 4;
+const STOCK = 5;
+
 describe("Dappazon", () => {
   let dappazon;
   let deployer, buyer;
@@ -26,15 +35,16 @@ describe("Dappazon", () => {
 
   describe("Listing", () => {
     let transaction;
+
     beforeEach(async ()=>{
       transaction = await dappazon.connect(deployer).list(
-        1,
-        'Shoes',
-        'Clothing',
-        'image',
-        1,
-        4,
-        5
+        ID,
+        NAME,
+        CATEGORY,
+        IMAGE,
+        COST,
+        RATING,
+        STOCK
       )
 
       await transaction.wait()
@@ -43,6 +53,10 @@ describe("Dappazon", () => {
     it('Returns the list', async () => {
       const item = await dappazon.items(1);
       expect(item.id).to.equal(1);
+    })
+
+    it('Emits list event', async () => {
+      expect(transaction).to.emit(dappazon, "list");
     })
   })
 })
